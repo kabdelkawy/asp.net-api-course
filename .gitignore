@@ -1,0 +1,37 @@
+# .NET Core
+*.dll
+*.exe
+*.pdb
+*.log
+*.user
+*.vscode/
+bin/
+obj/
+project.lock.json
+project.fragment.lock.json
+*.cache
+*.swp
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.cache
+*.csproj.user
+*.DotSettings.user
+
+# Rider
+.idea/
+*.sln.iml
+*.resharper
+
+# Others
+node_modules/
+
+.fake
