@@ -4,9 +4,9 @@ using WebAPICourse.Models;
 namespace WebAPICourse.Interfaces;
 public interface IStockRepository
 {
-    Task<List<Stock>> GetAllAsync();
-    Task<Stock?> GetByIdAsync(string Id);
-    Task<Stock> CreateStockAsync(Stock stockModel);
-    Task<Stock?> UpdateStockAsync(Stock stockModel, UpdateStockDto updateStockDto);
+    Task<List<Stock>> GetStocksAsync();
+    Task<Stock?> GetStockAsync(string id);
+    Task<Stock> CreateStockAsync(Stock stock);
+    Task<Stock?> UpdateStockAsync(Stock stock, UpdateStockDto updateStockDto);
     Task<Stock?> DeleteStockAsync(Stock stock);
 }

@@ -17,39 +17,39 @@ public class StockRepository : IStockRepository
         _dbContext = appDBContext;
     }
 
-    public async Task<Stock> CreateStockAsync(Stock stockModel)
-    {
-        await _dbContext.Stocks.AddAsync(stockModel);
-        await _dbContext.SaveChangesAsync();
-        return stockModel;
-    }
-
-    public async Task<Stock?> DeleteStockAsync(Stock stockModel)
-    {
-        _dbContext.Stocks.Remove(stockModel);
-        await _dbContext.SaveChangesAsync();
-        return stockModel;
-    }
-
-    public async Task<List<Stock>> GetAllAsync()
+    public async Task<List<Stock>> GetStocksAsync()
     {
         return await _dbContext.Stocks.ToListAsync();
     }
 
-    public async Task<Stock?> GetByIdAsync(string Id)
+    public async Task<Stock?> GetStockAsync(string Id)
     {
         return await _dbContext.Stocks.FirstOrDefaultAsync(stock => stock.Id == Id);
     }
 
-    public async Task<Stock?> UpdateStockAsync(Stock stockModel, UpdateStockDto updateStockDto)
+    public async Task<Stock> CreateStockAsync(Stock stock)
     {
-        if (updateStockDto.Symbol != string.Empty) stockModel.Symbol = updateStockDto.Symbol;
-        if (updateStockDto.Purchase != 0.0m) stockModel.Purchase = updateStockDto.Purchase;
-        if (updateStockDto.CompanyName != string.Empty) stockModel.CompanyName = updateStockDto.CompanyName;
-        if (updateStockDto.Industry != string.Empty) stockModel.Industry = updateStockDto.Industry;
-        if (updateStockDto.LastDiv != 0.0m) stockModel.LastDiv = updateStockDto.LastDiv;
-        if (updateStockDto.MarketCap != 0.0m) stockModel.MarketCap = updateStockDto.MarketCap;
+        await _dbContext.Stocks.AddAsync(stock);
         await _dbContext.SaveChangesAsync();
-        return stockModel;
+        return stock;
+    }
+
+    public async Task<Stock?> UpdateStockAsync(Stock stock, UpdateStockDto updateStockDto)
+    {
+        if (updateStockDto.Symbol != string.Empty) stock.Symbol = updateStockDto.Symbol;
+        if (updateStockDto.Purchase != 0.0m) stock.Purchase = updateStockDto.Purchase;
+        if (updateStockDto.CompanyName != string.Empty) stock.CompanyName = updateStockDto.CompanyName;
+        if (updateStockDto.Industry != string.Empty) stock.Industry = updateStockDto.Industry;
+        if (updateStockDto.LastDiv != 0.0m) stock.LastDiv = updateStockDto.LastDiv;
+        if (updateStockDto.MarketCap != 0.0m) stock.MarketCap = updateStockDto.MarketCap;
+        await _dbContext.SaveChangesAsync();
+        return stock;
+    }
+
+    public async Task<Stock?> DeleteStockAsync(Stock stock)
+    {
+        _dbContext.Stocks.Remove(stock);
+        await _dbContext.SaveChangesAsync();
+        return stock;
     }
 }

@@ -13,10 +13,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDBContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 var app = builder.Build();
 
