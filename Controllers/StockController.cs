@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPICourse.Dtos.StockDtos;
+using WebAPICourse.Helpers.StockHelpers;
 using WebAPICourse.Interfaces;
 using WebAPICourse.Mappers;
 using WebAPICourse.Models;
@@ -18,10 +19,10 @@ public class StockController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetStocks()
+    public async Task<IActionResult> GetStocks([FromQuery] StockQueryObject queryObject)
     {
-        var stocks = await _stockRepo.GetStocksAsync();
-        var stocksDto = stocks.Select(stock => stock.ToStockDtoFromModel());
+        var stocks = await _stockRepo.GetStocksAsync(queryObject);
+        var stocksDto = stocks.Select(stock => stock.ToStockDto());
         return Ok(stocksDto);
     }
 
@@ -30,15 +31,17 @@ public class StockController : ControllerBase
     {
         Stock? stock = await _stockRepo.GetStockAsync(id);
         if (stock == null) return NotFound();
-        else return Ok(stock.ToStockDtoFromModel());
+        else return Ok(stock.ToStockDto());
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateStock([FromBody] CreateStockDto createStock)
     {
-        Stock stockModel = createStock.ToStockModelFromCreateDto();
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        Stock stockModel = createStock.ToStockModel();
         await _stockRepo.CreateStockAsync(stockModel);
-        return CreatedAtAction(nameof(GetStock), new { id = stockModel.Id }, stockModel.ToStockDtoFromModel());
+        return CreatedAtAction(nameof(GetStock), new { id = stockModel.Id }, stockModel.ToStockDto());
     }
 
     [HttpPut]
@@ -48,7 +51,7 @@ public class StockController : ControllerBase
         Stock? stockModel = await _stockRepo.GetStockAsync(id);
         if (stockModel == null) return NotFound();
         await _stockRepo.UpdateStockAsync(stockModel, updateStockDto);
-        return CreatedAtAction(nameof(GetStock), new { id = id }, stockModel.ToStockDtoFromModel());
+        return CreatedAtAction(nameof(GetStock), new { id }, stockModel.ToStockDto());
     }
 
     [HttpDelete]

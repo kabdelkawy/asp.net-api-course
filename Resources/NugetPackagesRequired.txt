@@ -1,0 +1,23 @@
+01) Microsoft.EntityFrameworkCore
+
+02) Microsoft.EntityFrameworkCore.Design
+
+03) Microsoft.EntityFrameworkCore.Tools
+
+04) Pomelo.EntityFrameworkCore.MySql
+
+05) Microsoft.Extensions.Identity.Core
+
+06) Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+07) Microsoft.AspNetCore.Authentication.JwtBearer
+
+08) Microsoft.AspNetCore.Mvc.NewtonsoftJson
+
+09) Newtonsoft.Json
+
+10) 
+
+11)
+
+12)

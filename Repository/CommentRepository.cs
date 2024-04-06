@@ -48,4 +48,8 @@ public class CommentRepository : ICommentRepository
         return comment;
     }
 
+    public async Task<bool> IsStockExist(string? id)
+    {
+        return await _dbContext.Stocks.AnyAsync(stock => stock.Id==id);
+    }
 }

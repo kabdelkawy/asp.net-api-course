@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebAPICourse.Dtos.CommentDtos;
 using WebAPICourse.Models;
 
 namespace WebAPICourse.Dtos.StockDtos;
@@ -18,5 +19,7 @@ public class StockDto
     public string Industry { get; set; } = string.Empty;
 
     public long MarketCap { get; set; } = 0;
+
+    public List<CommentDto> Comments { get; set; } = [];
 
 }

@@ -5,21 +5,22 @@ namespace WebAPICourse.Mappers;
 
 public static class StockMappers
 {
-    public static StockDto ToStockDtoFromModel(this Stock stockModel)
+    public static StockDto ToStockDto(this Stock stock)
     {
         return new StockDto
         {
-            Id = stockModel.Id,
-            Symbol = stockModel.Symbol,
-            Purchase = stockModel.Purchase,
-            CompanyName = stockModel.CompanyName,
-            Industry = stockModel.Industry,
-            LastDiv = stockModel.LastDiv,
-            MarketCap = stockModel.MarketCap,
+            Id = stock.Id,
+            Symbol = stock.Symbol,
+            Purchase = stock.Purchase,
+            CompanyName = stock.CompanyName,
+            Industry = stock.Industry,
+            LastDiv = stock.LastDiv,
+            MarketCap = stock.MarketCap,
+            Comments = stock.Comments.Select(comment => comment.ToCommentDto()).ToList(),
         };
     }
 
-    public static Stock ToStockModelFromCreateDto(this CreateStockDto createStockDto)
+    public static Stock ToStockModel(this CreateStockDto createStockDto)
     {
         return new Stock
         {
@@ -29,7 +30,7 @@ public static class StockMappers
             Purchase = createStockDto.Purchase,
             LastDiv = createStockDto.LastDiv,
             Industry = createStockDto.Industry,
-            MarketCap = createStockDto.MarketCap
+            MarketCap = createStockDto.MarketCap,
         };
     }
 }

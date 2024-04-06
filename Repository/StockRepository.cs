@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebAPICourse.Data;
 using WebAPICourse.Dtos.StockDtos;
+using WebAPICourse.Helpers.StockHelpers;
 using WebAPICourse.Interfaces;
 using WebAPICourse.Models;
 
@@ -17,14 +18,21 @@ public class StockRepository : IStockRepository
         _dbContext = appDBContext;
     }
 
-    public async Task<List<Stock>> GetStocksAsync()
+    public async Task<List<Stock>> GetStocksAsync(StockQueryObject queryObject)
     {
-        return await _dbContext.Stocks.ToListAsync();
+        var stock = _dbContext.Stocks.Include(comments => comments.Comments).AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryObject.Symbol)) 
+            stock.Where(stock => stock.Symbol == queryObject.Symbol);
+        if (!string.IsNullOrWhiteSpace(queryObject.CompanyName)) 
+            stock.Where(stock => stock.CompanyName == queryObject.CompanyName);
+
+        return await stock.ToListAsync();
     }
 
     public async Task<Stock?> GetStockAsync(string Id)
     {
-        return await _dbContext.Stocks.FirstOrDefaultAsync(stock => stock.Id == Id);
+        return await _dbContext.Stocks.Include(comments => comments.Comments).FirstOrDefaultAsync(stock => stock.Id == Id);
     }
 
     public async Task<Stock> CreateStockAsync(Stock stock)

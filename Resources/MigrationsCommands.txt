@@ -1,0 +1,3 @@
+Add-Migration <migration-name> ====== "Add New Migration"
+
+Update-Database ====== "Apply The Added Migration To Database"

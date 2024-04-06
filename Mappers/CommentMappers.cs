@@ -5,7 +5,7 @@ namespace WebAPICourse.Mappers;
 
 public static class CommentMappers
 {
-    public static CommentDto ToCommentDtoFromModel(this Comment commentModel)
+    public static CommentDto ToCommentDto(this Comment commentModel)
     {
         return new CommentDto
         {
@@ -17,14 +17,15 @@ public static class CommentMappers
         };
     }
 
-    public static Comment ToCommentModelFromCreateDto(this CreateCommentDto createCommentDto)
+    public static Comment ToCommentModel(this CreateCommentDto createCommentDto)
     {
         return new Comment
         {
             Id = Guid.NewGuid().ToString(),
             Title = createCommentDto.Title,
             Content = createCommentDto.Content,
-            StockId = createCommentDto.StockId
+            StockId = createCommentDto.StockId,
+            CreatedAt = DateTime.Now
         };
     }
 }
